@@ -1,0 +1,286 @@
+﻿<Window
+	x:Class="Bookmaster3000.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:Bookmaster3000"
+	mc:Ignorable="d"
+	Style="{StaticResource NWindowStyle}"
+	DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	Title="Bookmaster3000"
+	Height="450"
+	Width="800">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="Auto" />
+			<ColumnDefinition
+				Width="40*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="*" />
+			<RowDefinition
+				Height="*" />
+		</Grid.RowDefinitions>
+		<Menu
+			Grid.ColumnSpan="2"
+			FontFamily="{StaticResource NFontFamily}">
+			<MenuItem
+				Header="File">
+				<MenuItem
+					x:Name="MenuLogin"
+					Header="Login" />
+				<MenuItem
+					x:Name="MenuLogout"
+					Header="Logout" />
+				<MenuItem
+					Header="Close" />
+			</MenuItem>
+			<MenuItem
+				x:Name="MenuLibrary"
+				Header="Library">
+				<MenuItem
+					Header="Manage Customers" />
+				<MenuItem
+					Header="Circulation" />
+				<MenuItem
+					Header="Reports" />
+			</MenuItem>
+		</Menu>
+		<Border
+			Margin="0"
+			Grid.Row="1"
+			Grid.RowSpan="2"
+			BorderBrush="Black"
+			BorderThickness="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition
+						Width="Auto" />
+					<ColumnDefinition
+						Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition
+						Height="Auto" />
+					<RowDefinition
+						Height="Auto" />
+					<RowDefinition
+						Height="Auto" />
+					<RowDefinition
+						Height="Auto" />
+					<RowDefinition
+						Height="Auto" />
+				</Grid.RowDefinitions>
+				<Image
+					Source="resources/Logo.PNG"
+					VerticalAlignment="Top"
+					Grid.ColumnSpan="2"
+					Margin="0,0,0,10"
+					Stretch="UniformToFill" />
+				<TextBlock
+					Grid.Row="1"
+					HorizontalAlignment="Right"
+					Margin="10"
+					TextWrapping="Wrap"
+					Text="Title"
+					VerticalAlignment="Center" />
+				<TextBox
+					Grid.Row="1"
+					Grid.Column="1"
+					x:Name="TitleBox"
+					HorizontalAlignment="Left"
+					Margin="0,10,10,10"
+					TextWrapping="Wrap"
+					VerticalAlignment="Center"
+					MinWidth="120" />
+				<TextBlock
+					Grid.Row="2"
+					HorizontalAlignment="Right"
+					Margin="10,0,10,10"
+					TextWrapping="Wrap"
+					Text="Author"
+					VerticalAlignment="Center" />
+				<TextBox
+					Grid.Row="2"
+					Grid.Column="1"
+					x:Name="AuthorBox"
+					HorizontalAlignment="Left"
+					Margin="0,0,0,10"
+					TextWrapping="Wrap"
+					VerticalAlignment="Center"
+					MinWidth="120" />
+				<TextBlock
+					Grid.Row="3"
+					HorizontalAlignment="Right"
+					Margin="10,0,10,10"
+					TextWrapping="Wrap"
+					Text="Subject"
+					VerticalAlignment="Center" />
+				<TextBox
+					Grid.Row="3"
+					Grid.Column="1"
+					x:Name="SubjectBox"
+					HorizontalAlignment="Left"
+					Margin="0,0,0,10"
+					TextWrapping="Wrap"
+					VerticalAlignment="Center"
+					MinWidth="120" />
+				<Button
+					Grid.Row="4"
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					Margin="0,0,0,10"
+					VerticalAlignment="Center"
+					MinWidth="120"
+					Content="Search"
+					Click="Search_Click" />
+			</Grid>
+		</Border>
+		<Border
+			Grid.Row="1"
+			Grid.Column="1"
+			Grid.ColumnSpan="2"
+			BorderBrush="Black"
+			BorderThickness="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition
+						Height="*" />
+					<RowDefinition
+						Height="Auto" />
+				</Grid.RowDefinitions>
+				<DataGrid
+					x:Name="BooksDataGrid"
+					Margin="10"
+					CanUserAddRows="False"
+					CanUserDeleteRows="False"
+					CanUserResizeRows="False"
+					CanUserReorderColumns="True"
+					CanUserResizeColumns="True"
+					CanUserSortColumns="True"
+					AutoGenerateColumns="False"
+					ItemsSource="{Binding Books, Mode=OneWay}"
+					IsReadOnly="True"
+					SelectionChanged="BooksDataGrid_SelectionChanged">
+					<DataGrid.Columns>
+						<DataGridTextColumn
+							Header="Key"
+							Binding="{Binding Key}" />
+						<DataGridTextColumn
+							Header="Title"
+							Binding="{Binding Title}" />
+						<DataGridTextColumn
+							Header="Authors"
+							Binding="{Binding AuthorsStr}" />
+					</DataGrid.Columns>
+				</DataGrid>
+				<TextBlock
+					HorizontalAlignment="Right"
+					Margin="0,0,10,10"
+					Grid.Row="1"
+					TextWrapping="Wrap"
+					VerticalAlignment="Top">
+					<Run
+						Text="{Binding Books.Count,FallbackValue=---,Mode=OneWay}" />
+					<Run
+						Text=" books found" />
+				</TextBlock>
+			</Grid>
+		</Border>
+		<Border
+			Grid.Column="1"
+			Margin="0"
+			Grid.Row="2"
+			BorderBrush="Black"
+			BorderThickness="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition
+						Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition
+						Width="5*" />
+					<ColumnDefinition
+						Width="1*" />
+					<ColumnDefinition
+						Width="1*" />
+				</Grid.ColumnDefinitions>
+				<ScrollViewer
+					Margin="0"
+					Grid.RowSpan="2">
+					<StackPanel>
+						<TextBlock
+							TextWrapping="Wrap"
+							Text="{Binding SelectedBook.Title,FallbackValue=Book,Mode=OneWay}"
+							Margin="10"
+							FontSize="18"
+							FontWeight="Bold" />
+						<TextBlock
+							TextWrapping="Wrap"
+							Margin="10,5,10,10">
+							<Run
+								Text="by " />
+							<Hyperlink>
+								<Run
+									Text="{Binding SelectedBook.AuthorsStr,FallbackValue=Authors,Mode=OneWay}" />
+							</Hyperlink>
+							<LineBreak />
+							<Run
+								Text="first published: " />
+							<Run
+								Text="{Binding SelectedBook.FirstPublishedDate,FallbackValue=-- --- ----,TargetNullValue=-- --- ----,Mode=OneWay}" />
+						</TextBlock>
+						<TextBlock
+							TextWrapping="Wrap"
+							Margin="10,0"
+							Text="Description "
+							FontWeight="Bold" />
+						<TextBlock
+							TextWrapping="Wrap"
+							Margin="10,0,10,10"
+							Text="{Binding SelectedBook.Description,FallbackValue='No description found',TargetNullValue='No description found',Mode=OneWay}" />
+						<TextBlock
+							TextWrapping="Wrap"
+							Margin="10,0"
+							Text="Subjects "
+							FontWeight="Bold" />
+						<TextBlock
+							TextWrapping="Wrap"
+							Margin="10,0,10,10"
+							Text="{Binding SelectedBook.Subjects,FallbackValue='No subjects found',TargetNullValue='No subjects found',Mode=OneWay}" />
+					</StackPanel>
+				</ScrollViewer>
+				<Image
+					Grid.ColumnSpan="2"
+					Grid.Column="1"
+					Margin="10"
+					Source="{Binding SelectedImageFile,Mode=OneWay}" />
+				<Button
+					Grid.Column="1"
+					Grid.Row="1"
+					x:Name="PrevImageBtn"
+					Content="&lt;"
+					Margin="10,0,10,10"
+					VerticalAlignment="Bottom"
+					FontSize="16"
+					Click="PrevImageBtn_Click" />
+				<Button
+					Grid.Column="2"
+					Grid.Row="1"
+					x:Name="NextImageBtn"
+					Content="&gt;"
+					Margin="10,0,10,10"
+					VerticalAlignment="Bottom"
+					FontSize="16"
+					Click="NextImageBtn_Click" />
+			</Grid>
+		</Border>
+	</Grid>
+</Window>
